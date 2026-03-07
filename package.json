@@ -3,6 +3,9 @@
     "version": "5.0.0",
     "description": "Enhanced component based on vant",
     "type": "module",
+    "files": [
+        "dist"
+    ],
     "main": "./dist/jobsys-explore.cjs",
     "module": "./dist/jobsys-explore.js",
     "exports": {

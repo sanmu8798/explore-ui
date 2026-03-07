@@ -36,13 +36,7 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Publish to npm with OIDC
-        run: |
-          # 获取 OIDC token
-          OIDC_TOKEN=$(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npmjs.org" | jq -r '.value')
-
-          # 使用 OIDC token 登录 npm
-          echo "//registry.npmjs.org/:_authToken=${OIDC_TOKEN}" > ~/.npmrc
-
-          # 发布
-          pnpm publish --access public --no-git-checks
+      - name: Publish to npm
+        run: pnpm publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

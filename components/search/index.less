@@ -1,0 +1,119 @@
+.ex-search {
+	background: var(--ex-white);
+	
+	.ex-search__quick-bar {
+		padding: var(--van-padding-sm) var(--van-padding-md);
+		
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		
+		.ex-search__quick-container {
+			flex-grow: 1;
+			display: flex;
+			
+			.ex-search__quick-item {
+				margin-right: var(--van-padding-md);
+				
+				.ex-search__quick-trigger {
+					font-size: 12px;
+					font-weight: 400;
+					color: var(--ex-gray-7);
+					display: flex;
+					align-items: center;
+					
+					&.active {
+						color: var(--van-primary-color);
+					}
+					
+					.ex-search__quick-label {
+						max-width: 130px;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+						display: inline-block;
+					}
+					
+					.ex-search__quick-icon {
+						margin-left: 2px;
+					}
+					
+					
+				}
+			}
+		}
+		
+		.ex-search__filter {
+			font-size: 12px;
+			font-weight: 400;
+			color: var(--ex-gray-7);
+			width: 50px;
+			text-align: right;
+			flex-shrink: 0;
+		}
+	}
+}
+
+.ex-search-popup {
+	height: 80%;
+	overflow: hidden;
+	
+	.ex-search-popup__header {
+		box-sizing: border-box;
+		padding: var(--van-padding-md);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 48px;
+	}
+	
+	.ex-search-popup__content {
+		height: calc(100% - 114px);
+		overflow: auto;
+	}
+	
+	
+	.ex-search-popup__footer {
+		padding: var(--van-padding-md);
+		box-sizing: border-box;
+		height: 66px;
+		line-height: 0;
+	}
+	
+	
+	.ex-search__popup-item {
+		margin-bottom: var(--van-padding-md);
+	}
+	
+	.ex-search__field-item {
+		.ex-field {
+			.van-field__label {
+				font-weight: bold;
+			}
+		}
+	}
+	
+	.ex-search__expand-item {
+		
+		.van-collapse-item {
+			.van-cell {
+				&:after {
+					border-bottom: none
+				}
+			}
+		}
+		
+		.ex-search__expand-title {
+			font-weight: bold;
+		}
+		
+		.ex-search__expand-trigger {
+			font-size: 12px;
+		}
+		
+		.ex-search__expand-options {
+			.ex-search__expand-option {
+			}
+		}
+	}
+}

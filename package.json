@@ -1,0 +1,70 @@
+{
+    "name": "jobsys-explore",
+    "version": "4.8.3",
+    "description": "Enhanced component based on vant",
+    "type": "module",
+    "main": "./dist/jobsys-explore.cjs",
+    "module": "./dist/jobsys-explore.js",
+    "exports": {
+        ".": {
+            "import": "./dist/jobsys-explore.js",
+            "require": "./dist/jobsys-explore.cjs"
+        },
+        "./hooks": {
+            "import": "./dist/hooks.js",
+            "require": "./dist/hooks.cjs"
+        },
+        "./directives": {
+            "import": "./dist/directives.js",
+            "require": "./dist/directives.cjs"
+        },
+        "./*": {
+            "import": "./*",
+            "require": "./*"
+        }
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "lint": "oxlint",
+        "fmt": "oxfmt write"
+    },
+    "hooks": {
+        "before:init": "git fetch --prune --prune-tags origin"
+    },
+    "keywords": [
+        "jobsys",
+        "explore",
+        "ui"
+    ],
+    "author": "sinceow@163.com",
+    "license": "ISC",
+    "dependencies": {
+        "@vueuse/core": "^14.2.1",
+        "qrcode": "^1.5.4",
+        "sm-crypto-v2": "^1.15.1",
+        "signature_pad": "^5.1.3"
+    },
+    "peerDependencies": {
+        "vant": "^4.9.22",
+        "axios": "^1.13.6",
+        "dayjs": "^1.11.19",
+        "lodash-es": "^4.17.23",
+        "vue": "^3.5.29"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^6.0.4",
+        "@vitejs/plugin-vue-jsx": "^5.1.4",
+        "@vue/compiler-sfc": "^3.5.29",
+        "less": "^4.5.1",
+        "postcss": "^8.5.8",
+        "postcss-pxtorem": "^6.1.0",
+        "rolldown-vite": "^7.3.1",
+        "oxlint": "^1.51.0",
+        "oxfmt": "^0.36.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jobsys/explore-ui"
+    }
+}

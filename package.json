@@ -1,6 +1,6 @@
 {
     "name": "jobsys-explore",
-    "version": "5.0.1",
+    "version": "5.0.2",
     "description": "Enhanced component based on vant",
     "type": "module",
     "files": [

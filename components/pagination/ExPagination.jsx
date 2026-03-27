@@ -134,6 +134,7 @@ export default defineComponent({
 			searchParams: {},
 			offsetTop: 0,
 			refreshLoading: false,
+			searchLoading: false,
 			isFirstLoad: true,
 		})
 
@@ -206,7 +207,13 @@ export default defineComponent({
 				data = {}
 			try {
 				state.loading = true
-				state.refreshLoading = true
+				// state.refreshLoading = true
+
+				if(refresh) {
+					state.refreshLoading = true
+				} else {
+					state.searchLoading = true
+				}
 
 				const method = props.method
 
@@ -278,16 +285,18 @@ export default defineComponent({
 			nextTick(() => {
 				state.isFirstLoad = false
 				state.refreshLoading = false
+				state.searchLoading = false
 				state.loading = false
 			})
 		}
 
 		const onSearch = (searchData) => {
-			if (state.loading || state.refreshLoading) {
+			if (state.loading || state.refreshLoading || state.searchLoading) {
 				showToast({
 					message: "加载中，请稍后",
 					forbidClick: true,
 				})
+				
 				return
 			}
 

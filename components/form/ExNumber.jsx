@@ -5,6 +5,7 @@ import ExField from "./ExField.jsx"
 import { pick } from "lodash-es"
 
 /**
+ * @deprecated  使用存在不能为 0 的问题，使用 ExField type="number" 进行处理
  * ExNumber 数字
  * @version 1.0.0
  */

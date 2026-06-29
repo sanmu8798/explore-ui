@@ -1,7 +1,8 @@
-import { computed, defineComponent, inject, nextTick, onMounted, reactive, ref, watch } from "vue"
+import { computed, defineComponent, inject, nextTick, onMounted, reactive, ref, toRaw, watch } from "vue"
 import { EX_FORM, EX_UPLOADER } from "../provider/ExProvider.jsx"
 import { cloneDeep, every, isArray, isEqual, isFunction, isObject, isString, pick } from "lodash-es"
 import { initItemDefaultValue } from "./utils"
+import { calcFormula, hasSelfReference } from "./utils/formula-engine"
 import { useCache, useFetch, useFormFail, useFormFormat, useProcessStatusSuccess } from "../../hooks"
 import { CellGroup, Form, showConfirmDialog, showSuccessToast, Skeleton } from "vant"
 import createFormItem from "./FormItem.jsx"
@@ -216,6 +217,38 @@ export default defineComponent({
 
 		const formItems = computed(() => (isFunction(props.form) ? props.form() : props.form))
 
+		/**
+		 * 计算所有 computed 字段的值
+		 * @param {Array} items - 表单项配置数组
+		 * @param {Object} formData - 表单数据对象
+		 */
+		const computeAllFields = (items, formData) => {
+			items.forEach((item) => {
+				if (item.type !== "computed" || !item.formula) {
+					return
+				}
+
+				try {
+					// 跳过直接自引用公式（如 formula="[total]+1", key="total"），防止栈溢出
+					if (hasSelfReference(item.formula, item.key)) {
+						console.warn(`[ExForm] computed field "${item.key}" has self-reference, skipped`)
+						return
+					}
+
+					const result = calcFormula(item.formula, formData)
+
+					// 仅当结果不含 error 时写回
+					if (!(result && typeof result === "object" && result.error)) {
+						formData[item.key] = result
+					} else {
+						console.warn(`[ExForm] computed field "${item.key}" returned error:`, result.error)
+					}
+				} catch (e) {
+					console.warn(`[ExForm] computed field "${item.key}" calculation error:`, e)
+				}
+			})
+		}
+
 		const uploaderProvider = inject(EX_UPLOADER, () => ({}))
 		const formProvider = inject(EX_FORM, () => ({}))
 
@@ -233,6 +266,10 @@ export default defineComponent({
 		watch(
 			() => state.submitForm,
 			() => {
+				// 1. 先计算 computed 字段（在缓存之前，确保缓存包含最新计算值）
+				computeAllFields(formItems.value, state.submitForm)
+
+				// 2. 再缓存
 				if (props.cacheable) {
 					useCache(props.cacheable, localStorage).set(state.submitForm)
 				}
@@ -349,6 +386,12 @@ export default defineComponent({
 		}
 
 		const onSubmit = async () => {
+			// 提交前重新计算所有 computed 字段，确保提交数据是最新值
+			const rawForm = toRaw(state.submitForm)
+			computeAllFields(formItems.value, rawForm)
+			state.submitForm = { ...rawForm }
+			await nextTick()
+
 			await formRef.value.validate()
 
 			if (props.submitConfirmText) {

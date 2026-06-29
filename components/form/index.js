@@ -21,6 +21,7 @@ import _ExRate from "./ExRate.jsx"
 import _ExSlider from "./ExSlider.jsx"
 import _ExFieldUploader from "./ExFieldUploader.jsx"
 import _ExMatrixRadio from "./ExMatrixRadio.jsx"
+import _ExComputedField from "./ExComputedField.jsx"
 
 import _ExForm from "./ExForm.jsx"
 
@@ -42,5 +43,6 @@ export const ExRate = withInstall(_ExRate)
 export const ExSlider = withInstall(_ExSlider)
 export const ExFieldUploader = withInstall(_ExFieldUploader)
 export const ExMatrixRadio = withInstall(_ExMatrixRadio)
+export const ExComputedField = withInstall(_ExComputedField)
 
 export const ExForm = withInstall(_ExForm)

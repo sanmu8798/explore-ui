@@ -48,6 +48,9 @@ export default defineComponent({
 		const isReadonly = computed(() => (props.mask ? true : props.readonly))
 
 		const onUpdateValue = (value) => {
+			if(props.type === 'number'){
+				value = Number(value)
+			}
 			emit("update:modelValue", value)
 		}
 

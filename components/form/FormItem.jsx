@@ -8,7 +8,6 @@ import ExSwitch from "./ExSwitch.jsx"
 import ExCheckbox from "./ExCheckbox.jsx"
 import ExRadio from "./ExRadio.jsx"
 import ExDatetime from "./ExDatetime.jsx"
-import ExNumber from "./ExNumber.jsx"
 import ExRate from "./ExRate.jsx"
 import ExSlider from "./ExSlider.jsx"
 import ExAddress from "./ExAddress.jsx"
@@ -164,11 +163,17 @@ const render = (item, submitForm, { props, slots }) => {
 					</ExCascader>
 				)
 				break
+			case "computed":
+				// 计算字段运行时不可见，由 ExForm watcher 在后台计算
+				return null
 			case "number":
 				renderItem = (
-					<ExNumber key={item.key} v-model={submitForm[item.key]} {...componentProps} {...fieldProps}>
+					<ExField key={item.key} v-model={submitForm[item.key]} {...componentProps} {...{...fieldProps, type: "number"}}>
+                        {componentSlots}
+                    </ExField>
+					/*<ExNumber key={item.key} v-model={submitForm[item.key]} {...componentProps} {...fieldProps}>
 						{componentSlots}
-					</ExNumber>
+					</ExNumber>*/
 				)
 				break
 			case "rate":

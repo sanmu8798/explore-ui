@@ -24,9 +24,8 @@
 </template>
 <script setup>
 import ExForm from "../components/form/ExForm.jsx"
-import { Checkbox, Icon, showFailToast, Button } from "vant"
-import { h, ref } from "vue"
-import { useDayjs } from "../hooks/datetime.js"
+import {Button, Checkbox} from "vant"
+import {ref} from "vue"
 
 const checked = ref(false)
 
@@ -85,6 +84,18 @@ const getTestForm = () => {
 				filterable: true,
 			},
 		},
+        {
+            title: "数字1",
+            key: "number-1",
+            type: "number",
+            required: true,
+        },
+        {
+            title: "数字2",
+            key: "number-2",
+            type: "number",
+        },
+        {"key": "computed-1", "help": "输入公式，如 SUM([q1], [q2])。用 [字段key] 引用其他字段的值。", "type": "computed", "break": false, "title": "本学年应缴学费和住宿费合计（）元。", "prefix": null, "suffix": null, "decimal": 2, "formula": "[number-1]+[number-2]", "required": false, "placeholder": "-"}
 	]
 }
 

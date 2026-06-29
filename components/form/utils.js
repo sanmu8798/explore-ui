@@ -54,6 +54,8 @@ const initItemDefaultValue = (item, existingData, submitForm, provider) => {
 		value = value || {}
 	} else if (item.type === "matrix-checkbox") {
 		value = value || {}
+	} else if (item.type === "computed") {
+		value = value ?? null
 	}
 
 	return value
